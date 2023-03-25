@@ -21,9 +21,12 @@ defmodule CollabtasksBackendWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", CollabtasksBackendWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", CollabtasksBackendWeb do
+    pipe_through :api
+
+    resources "/boards", BoardController, only: [:create, :show, :update, :delete]
+    resources "/accounts", UserController, only: [:create, :show]
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:collabtasks_backend, :dev_routes) do

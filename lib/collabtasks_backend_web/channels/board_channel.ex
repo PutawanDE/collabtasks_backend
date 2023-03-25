@@ -2,12 +2,8 @@ defmodule CollabtasksBackendWeb.BoardChannel do
   use Phoenix.Channel
   require Logger
 
-  def join("board:1", _message, socket) do
+  def join("board:" <> _board_id, _params, socket) do
     {:ok, socket}
-  end
-
-  def join("board:" <> _board_id, _params, _socket) do
-    {:error, %{reason: "unauthorized"}}
   end
 
   def handle_in("new_task", params, socket), do: handle_new_task(params, socket)
