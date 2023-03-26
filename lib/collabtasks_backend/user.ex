@@ -4,7 +4,7 @@ defmodule CollabtasksBackend.User do
 
   schema "users" do
     field :displayName, :string
-    field :email, :string
+    field :email, :string, primary_key: true
     field :photoUrl, :string
 
     timestamps()
@@ -13,7 +13,7 @@ defmodule CollabtasksBackend.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:id, :email, :displayName, :photoUrl])
-    |> validate_required([:id, :email, :displayName, :photoUrl])
+    |> cast(attrs, [:email, :displayName, :photoUrl])
+    |> validate_required([:email, :displayName, :photoUrl])
   end
 end

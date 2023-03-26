@@ -11,9 +11,15 @@ defmodule CollabtasksBackend.Accounts do
   def get_account!(id), do: Repo.get!(User, id)
 
   def create_account(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
+    case Repo.get_by(User, email: attrs["email"]) do
+      nil ->
+        %User{}
+        |> User.changeset(attrs)
+        |> Repo.insert()
+
+      %User{} = user ->
+        {:ok, user}
+    end
   end
 
   def update_account(%User{} = user, attrs) do

@@ -54,8 +54,14 @@ defmodule CollabtasksBackendWeb.BoardChannel do
 
   defp update_task(params) do
     CollabtasksBackend.Repo.get(CollabtasksBackend.Task, params["id"])
-    |> CollabtasksBackend.Task.changeset(params)
-    |> CollabtasksBackend.Repo.update()
+    |> case do
+      nil ->
+        {:error, "Task not found"}
+
+      task ->
+        CollabtasksBackend.Task.changeset(task, params)
+        |> CollabtasksBackend.Repo.update()
+    end
   end
 
   def handle_delete_task(params, socket) do

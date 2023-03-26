@@ -17,14 +17,14 @@ defmodule CollabtasksBackendWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     account = Accounts.get_account!(id)
-    render(conn, :show, account: account)
+    render(conn, :show, user: account)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     account = Accounts.get_account!(id)
 
     with {:ok, %User{} = user} <- Accounts.update_account(account, user_params) do
-      render(conn, :show, account: user)
+      render(conn, :show, user: user)
     end
   end
 
